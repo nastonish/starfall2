@@ -1,0 +1,187 @@
+GeometryDLL — інструкція користувача
+
+Назва бібліотеки: GeometryDLL
+Тема: Аналітична геометрія на площині (2D)
+Призначення: Надати базові функції для обчислень у 2D (відстані, середини, векторні операції, рівняння прямої, кути).
+Середовище розробки: Microsoft Visual Studio, C++ (DLL + Console Application), неявне зв'язування (implicit linking).
+Функції DLL:
+- distance2d
+- midpoint2d
+- vectorLength2d
+- dotProduct2d
+- crossProduct2d
+- triangleArea2d
+- lineFromPoints2d
+- pointLineDistance2d
+- angleBetweenVectorsDeg2d
+
+Function name:
+distance2d
+Description:
+Обчислює евклідову відстань між двома точками (x1, y1) та (x2, y2).
+Syntax:
+double __stdcall distance2d(double x1, double y1, double x2, double y2);
+Parameters:
+- x1, y1: координати першої точки.
+- x2, y2: координати другої точки.
+Return value:
+Повертає відстань між точками (значення >= 0).
+Parameter validation:
+Окремої перевірки параметрів не виконується.
+Special cases:
+Якщо точки збігаються, повертається 0.
+Example:
+double d = distance2d(0.0, 0.0, 3.0, 4.0); // d = 5.0
+
+Function name:
+midpoint2d
+Description:
+Обчислює координати середини відрізка між двома точками.
+Syntax:
+int __stdcall midpoint2d(double x1, double y1, double x2, double y2, double* outX, double* outY);
+Parameters:
+- x1, y1: координати першої точки.
+- x2, y2: координати другої точки.
+- outX: вказівник для запису x-координати середини.
+- outY: вказівник для запису y-координати середини.
+Return value:
+Повертає 1 при успішному обчисленні, 0 при помилці параметрів.
+Parameter validation:
+Перевіряє outX та outY на NULL.
+Special cases:
+Повертає 0, якщо outX == NULL або outY == NULL.
+Example:
+double mx = 0.0, my = 0.0;
+int ok = midpoint2d(2.0, 6.0, 4.0, 10.0, &mx, &my); // ok = 1, mx = 3.0, my = 8.0
+
+Function name:
+vectorLength2d
+Description:
+Обчислює довжину вектора (x, y) від початку координат.
+Syntax:
+double __stdcall vectorLength2d(double x, double y);
+Parameters:
+- x, y: координати вектора.
+Return value:
+Повертає довжину вектора (значення >= 0).
+Parameter validation:
+Окремої перевірки параметрів не виконується.
+Special cases:
+Для нульового вектора (0, 0) повертається 0.
+Example:
+double len = vectorLength2d(6.0, 8.0); // len = 10.0
+
+Function name:
+dotProduct2d
+Description:
+Обчислює скалярний добуток двох векторів.
+Syntax:
+double __stdcall dotProduct2d(double ax, double ay, double bx, double by);
+Parameters:
+- ax, ay: координати першого вектора.
+- bx, by: координати другого вектора.
+Return value:
+Повертає скалярний добуток ax*bx + ay*by.
+Parameter validation:
+Окремої перевірки параметрів не виконується.
+Special cases:
+Для перпендикулярних векторів результат дорівнює 0.
+Example:
+double dp = dotProduct2d(1.0, 2.0, 3.0, 4.0); // dp = 11.0
+
+Function name:
+crossProduct2d
+Description:
+Обчислює псевдоскалярний (z-компонент) векторного добутку двох 2D-векторів.
+Syntax:
+double __stdcall crossProduct2d(double ax, double ay, double bx, double by);
+Parameters:
+- ax, ay: координати першого вектора.
+- bx, by: координати другого вектора.
+Return value:
+Повертає значення ax*by - ay*bx.
+Parameter validation:
+Окремої перевірки параметрів не виконується.
+Special cases:
+Для колінеарних векторів результат дорівнює 0.
+Example:
+double cp = crossProduct2d(1.0, 2.0, 3.0, 4.0); // cp = -2.0
+
+Function name:
+triangleArea2d
+Description:
+Обчислює площу трикутника за координатами трьох точок.
+Syntax:
+double __stdcall triangleArea2d(double x1, double y1, double x2, double y2, double x3, double y3);
+Parameters:
+- x1, y1: координати першої точки.
+- x2, y2: координати другої точки.
+- x3, y3: координати третьої точки.
+Return value:
+Повертає площу трикутника (значення >= 0).
+Parameter validation:
+Окремої перевірки параметрів не виконується.
+Special cases:
+Для колінеарних точок площа дорівнює 0.
+Example:
+double s = triangleArea2d(0.0, 0.0, 4.0, 0.0, 0.0, 3.0); // s = 6.0
+
+Function name:
+lineFromPoints2d
+Description:
+Будує коефіцієнти прямої A*x + B*y + C = 0 за двома точками.
+Syntax:
+int __stdcall lineFromPoints2d(double x1, double y1, double x2, double y2, double* outA, double* outB, double* outC);
+Parameters:
+- x1, y1: координати першої точки.
+- x2, y2: координати другої точки.
+- outA: вказівник для коефіцієнта A.
+- outB: вказівник для коефіцієнта B.
+- outC: вказівник для коефіцієнта C.
+Return value:
+Повертає 1 при успіху, 0 при невалідних параметрах.
+Parameter validation:
+Перевіряє outA, outB, outC на NULL.
+Перевіряє, що точки не збігаються.
+Special cases:
+Повертає 0, якщо будь-який вихідний вказівник NULL або якщо (x1, y1) == (x2, y2).
+Example:
+double A = 0.0, B = 0.0, C = 0.0;
+int ok = lineFromPoints2d(1.0, 1.0, 3.0, 5.0, &A, &B, &C); // ok = 1, A = -4.0, B = 2.0, C = 2.0
+
+Function name:
+pointLineDistance2d
+Description:
+Обчислює відстань від точки P(px, py) до прямої A*x + B*y + C = 0.
+Syntax:
+double __stdcall pointLineDistance2d(double px, double py, double a, double b, double c);
+Parameters:
+- px, py: координати точки.
+- a, b, c: коефіцієнти прямої.
+Return value:
+Повертає відстань від точки до прямої (>= 0) або -1.0 для невалідної прямої.
+Parameter validation:
+Перевіряє знаменник sqrt(a*a + b*b). Якщо він дорівнює 0.0, пряма невалідна.
+Special cases:
+Повертає -1.0, якщо a == 0 і b == 0.
+Example:
+double d = pointLineDistance2d(2.0, 2.0, -4.0, 2.0, 2.0); // d ≈ 0.447214
+
+Function name:
+angleBetweenVectorsDeg2d
+Description:
+Обчислює кут між двома векторами у градусах.
+Syntax:
+double __stdcall angleBetweenVectorsDeg2d(double ax, double ay, double bx, double by);
+Parameters:
+- ax, ay: координати першого вектора.
+- bx, by: координати другого вектора.
+Return value:
+Повертає кут у градусах у межах [0, 180] або -1.0 для невалідного випадку.
+Parameter validation:
+Перевіряє довжини обох векторів. Якщо хоча б одна довжина дорівнює 0.0, повертає -1.0.
+Special cases:
+Повертає -1.0 для нульового вектора.
+Також виконує обмеження cosineValue до діапазону [-1.0, 1.0] перед acos.
+Example:
+double angle = angleBetweenVectorsDeg2d(1.0, 0.0, 0.0, 1.0); // angle = 90.0
