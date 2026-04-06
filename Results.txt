@@ -1,0 +1,13 @@
+Демонстрація функцій GeometryDLL
+--------------------------------
+distance2d((0,0),(3,4)) = 5
+midpoint2d((2,6),(4,10)): статус = 1, середина = (3, 8)
+vectorLength2d((6,8)) = 10
+dotProduct2d((1,2),(3,4)) = 11
+crossProduct2d((1,2),(3,4)) = -2
+triangleArea2d((0,0),(4,0),(0,3)) = 6
+lineFromPoints2d((1,1),(3,5)): статус = 1, A=-4, B=2, C=2
+pointLineDistance2d(P(2,2), A,B,C) = 0.447214
+angleBetweenVectorsDeg2d((1,0),(0,1)) = 90
+pointLineDistance2d з невалідною прямою (A=0, B=0) = -1
+angleBetweenVectorsDeg2d з нульовим вектором = -1
